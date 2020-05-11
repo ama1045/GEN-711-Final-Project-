@@ -35,7 +35,7 @@
 ****Do all of these steps for EACH Sample ID 
 
 
-3.) Paste the exome read files in any text application (such as Word) for later use and so it is known which exome read files belong to each individual. Organize the data in a way that looks something like this:
+3.) Paste the links for the forward exome read files in any text application (such as Word) for later use and so it is known which exome read file belongs to each individual. Organize the data in a way that looks something like this:
   5 Randomly Selected Males of African Descent (African Ancestry in Southwest US):
     o NA19700
         o ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/000/SRR1598280/SRR1598280_1.fastq.gz
