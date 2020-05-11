@@ -85,7 +85,7 @@ tmux at -t final
 ctrl + b, then d #(ctrl and b simultaneously, release them, then press d).
 
 
-7.) Make new directory for project and move into  the new directory:
+7.) Make new directory for project and move into the new directory:
 mkdir Final_Project 
 cd Final_Project 
 
