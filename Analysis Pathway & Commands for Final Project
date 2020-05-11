@@ -1,0 +1,262 @@
+1.) Identify individuals from two different populations for rs334 SNP analysis:
+  • Navigate to: https://www.internationalgenome.org/data-portal/sample
+    o Select the “Filter by population” tab 
+    o Check the box for “African Ancestry in Southwest US” 
+    o Select the “Filter by technology” tab 
+    o Check the box for “Exome”
+    o Note the Sample ID for the first 5 Male individuals 
+         NA19700
+         NA19818
+         NA20346
+         NA20291
+         NA19984
+    o Clear Filters 
+    o Select the “Filter by population” tab 
+    o Check the box for “British in England and Scotland” 
+    o Select the “Filter by technology” tab 
+    o Check the box for “Exome”
+    o Note the Sample ID for the first 5 Male individuals 
+         HG00114
+         HG00119
+         HG00138
+         HG00140
+         HG00107
+
+
+2.) Obtain datasets for rs334 SNP analysis by searching for each individual’s Sample ID in the European Nucleotide Archive (ENA):
+  • Navigate to: https://www.ebi.ac.uk/ena/browser/home
+    o In the first search  box, type in one of the Sample IDs
+    o Next to the “Run” tab, select the “View all [#] Results” link
+    o Select the “SRR..” accession number that includes only exome data 
+    o Select the “Show” link next to “Read Files:”
+    o Copy only the forward exome reads that end in _1 under the “FASTQ FTP” header
+         Control+click
+         Select “Copy Link”
+****Do all of these steps for EACH Sample ID 
+
+
+3.) Paste the exome read files in any text application (such as Word) for later use and so it is known which exome read files belong to each individual. Organize the data in a way that looks something like this:
+  5 Randomly Selected Males of African Descent (African Ancestry in Southwest US):
+    o NA19700
+        o ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/000/SRR1598280/SRR1598280_1.fastq.gz
+    o NA19818
+        o ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/007/SRR1598367/SRR1598367_1.fastq.gz
+    o NA20346
+        o ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/002/SRR1598442/SRR1598442_1.fastq.gz
+    o NA20291
+        o ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/004/SRR1598414/SRR1598414_1.fastq.gz
+    o NA19984
+        o ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR160/000/SRR1604180/SRR1604180_1.fastq.gz
+ 5 Randomly Selected Males NOT of African Descent (British in England and Scotland - European Ancestry)
+    o HG00114
+        o ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/006/SRR1596646/SRR1596646_1.fastq.gz
+    o HG00119
+        o ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/002/SRR1596652/SRR1596652_1.fastq.gz
+    o HG00138
+        o ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/002/SRR1596672/SRR1596672_1.fastq.gz
+    o HG00140
+        o ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR160/006/SRR1600436/SRR1600436_1.fastq.gz
+    o HG00107
+        o ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/000/SRR1599300/SRR1599300_1.fastq.gz
+
+
+4.) Launch a Jetstream instance: 
+  • Navigate to: https://use.jetstream-cloud.org/
+      o Select “Launch New Instance” in the Dashboard
+      o Select as a machine in “Image Search”: Ubuntu 18_04 Devel and Docker
+      o Select “Launch”
+      o Change Instance Size to: s1.xlarge (CPU: 24, Mem: 60 GB, Disk: 240 GB) 
+      o Select “Launch Instance”
+      o Copy the IP Address 
+
+
+5.) Once the instance is fully active, connect to the Jetstream instance via the terminal: 
+ssh -i $HOME/jetkey username@xxx.xxx.xxx.xxx 
+# Replace "username" with Jetstream username, and "xxx.xxx.xxx.xxx" with the copied IP Address 
+# When it asks if you want to continue connecting, type "yes" and hit enter.
+# Type in Jetstream password when prompted.
+
+
+6.) Create a tmux window:
+tmux new -s final 
+# If disconnected from the instance or detached from the tmux window, reattach to the tmux window: 
+tmux at -t final
+# To intentionally detach from the tmux window: 
+ctrl + b, then d #(ctrl and b simultaneously, release them, then press d).
+
+
+7.) Make new directory for project and move into  the new directory:
+mkdir Final_Project 
+cd Final_Project 
+
+
+8.) Install conda to manage scientific software packages:
+mkdir anaconda
+cd anaconda
+curl -LO https://repo.anaconda.com/archive/Anaconda3-5.1.0-Linux-x86_64.sh
+bash Anaconda3-5.1.0-Linux-x86_64.sh -b -p $HOME/anaconda/install/
+echo ". $HOME/anaconda/install/etc/profile.d/conda.sh" >> ~/.bashrc
+source ~/.bashrc
+conda update -n base conda
+# type “y” and then "enter" to proceed 
+
+
+9.) Make a conda environment: 
+conda create -y --name finalproject
+
+
+10.) Activate conda environment:
+conda activate finalproject
+
+
+11.) Install blast 
+conda install -c bioconda blast
+# type “y” and then "enter" to proceed 
+
+
+12.) Install seqtk 
+conda install -c bioconda seqtk
+# type “y” and then "enter" to proceed 
+
+
+13.) Install MAFFT:
+conda install -c bioconda mafft
+# type “y” and then "enter" to proceed 
+
+
+14.) Move out of anaconda directory and back into Final_Project directory:
+cd ..
+
+
+15.) Copy the HBB gene, which will serve as the reference sequence, from NCBI:
+   • Navigate to: https://www.ncbi.nlm.nih.gov
+       o Under the “All Databases” tab, select “Gene”
+       o In the search box, type “HBB” and search 
+       o In the first box that shows up, click the “HBB – hemoglobin subunit beta” link. Make sure this gene is for humans first. It should say “Homo sapiens (human)” right below the link. 
+       o Under the “Genomic regions, transcripts, and products” tab where it says “Go to nucleotide:”, select the link that says “FASTA”  
+       o Copy the header and sequence information for the HBB gene in the shown reverse complement orientation 
+          o Command+C
+
+
+16.) In the terminal, paste the header and sequence information for the HBB gene:
+nano 
+Command+V
+Control+X
+Y #(to save)
+hbbgene.fasta # (File Name to Write:)
+Enter
+
+
+17.) Unwrap the reference HBB gene: 
+awk '{if(NR==1) {print $0} else {if($0 ~ /^>/) {print "\n"$0} else {printf $0}}}' hbbgene.fasta > hbbgene_unwrap.fa  
+
+
+18.) Download each individual’s exome read file initially from the ENA. Copy the links from the text application they were all pasted in. 
+curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/000/SRR1598280/SRR1598280_1.fastq.gz
+curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/007/SRR1598367/SRR1598367_1.fastq.gz
+curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/002/SRR1598442/SRR1598442_1.fastq.gz
+curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/004/SRR1598414/SRR1598414_1.fastq.gz
+curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR160/000/SRR1604180/SRR1604180_1.fastq.gz
+curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/006/SRR1596646/SRR1596646_1.fastq.gz
+curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/002/SRR1596652/SRR1596652_1.fastq.gz
+curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/002/SRR1596672/SRR1596672_1.fastq.gz
+curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR160/006/SRR1600436/SRR1600436_1.fastq.gz
+curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/000/SRR1599300/SRR1599300_1.fastq.gz
+
+
+19.) Convert the exome .fastq read files to .fasta files:
+seqtk seq -a SRR1598280_1.fastq.gz > SRR1598280_1.fasta
+seqtk seq -a SRR1598367_1.fastq.gz > SRR1598367_1.fasta
+seqtk seq -a SRR1598442_1.fastq.gz > SRR1598442_1.fasta
+seqtk seq -a SRR1598414_1.fastq.gz > SRR1598414_1.fasta
+seqtk seq -a SRR1604180_1.fastq.gz > SRR1604180_1.fasta
+seqtk seq -a SRR1596646_1.fastq.gz > SRR1596646_1.fasta
+seqtk seq -a SRR1596652_1.fastq.gz > SRR1596652_1.fasta
+seqtk seq -a SRR1596672_1.fastq.gz > SRR1596672_1.fasta
+seqtk seq -a SRR1600436_1.fastq.gz > SRR1600436_1.fasta
+seqtk seq -a SRR1599300_1.fastq.gz > SRR1599300_1.fasta
+
+
+20.) Make space by removing all of the .fastq files: 
+ls *.fastq.gz
+rm *.fastq.gz
+
+
+21.) Subsample down each individual’s exome .fasta read file to reduce the number of sequences in each:
+seqtk sample -s2343 SRR1598280_1.fasta 2500000 > sub_SRR1598280_1.fa
+seqtk sample -s2343 SRR1598367_1.fasta 2500000 > sub_SRR1598367_1.fa
+seqtk sample -s2343 SRR1598442_1.fasta 2500000 > sub_SRR1598442_1.fa
+seqtk sample -s2343 SRR1598414_1.fasta 2500000 > sub_SRR1598414_1.fa
+seqtk sample -s2343 SRR1604180_1.fasta 2500000 > sub_SRR1604180_1.fa
+seqtk sample -s2343 SRR1596646_1.fasta 2500000 > sub_SRR1596646_1.fa
+seqtk sample -s2343 SRR1596652_1.fasta 2500000 > sub_SRR1596652_1.fa
+seqtk sample -s2343 SRR1596672_1.fasta 2500000 > sub_SRR1596672_1.fa
+seqtk sample -s2343 SRR1600436_1.fasta 2500000 > sub_SRR1600436_1.fa
+seqtk sample -s2343 SRR1599300_1.fasta 2500000 > sub_SRR1599300_1.fa
+
+
+22.) Combine each individual’s subsampled exome .fa read file into one file:
+ls sub*
+cat sub* > sub_combinedexomes.fa
+
+
+23.) Check to make sure that the sub_combinedexomes.fa file is the same size as all of the subsampled .fa files added together:
+ls -lht
+# Add up all of the exome .fasta files and compare the total with the size of the combinedexomes.fa file. They should be the same:
+
+2.9G sub_combinedexomes.fa
+
+317M sub_SRR1599300_1.fa
+293M sub_SRR1600436_1.fa
+293M sub_SRR1596672_1.fa
+261M sub_SRR1596652_1.fa
+317M sub_SRR1596646_1.fa
+318M sub_SRR1604180_1.fa
+317M sub_SRR1598414_1.fa
+317M sub_SRR1598442_1.fa
+243M sub_SRR1598367_1.fa
+243M sub_SRR1598280_1.fa
+
+317M + 293M + 293M + 261M + 317M + 318M + 317M + 317M + 243M + 243M = 2919M or 2.919 G.
+
+
+24.) Build the database (HBB reference gene) that BLAST will use for searching
+makeblastdb -in hbbgene_unwrap.fa -out hbbgene_database -dbtype nucl
+
+
+25.) Blast the query (subsampled exome reads file) to the database (HBB reference gene) 
+blastn -db hbbgene_database -max_target_seqs 1 -query sub_combinedexomes.fa -outfmt '6 qseqid qlen length pident gaps evalue stitle' -evalue 1e-10 -num_threads 6 -out blast.out
+
+
+26.) Look at the blast output file:
+less blast.out
+
+27.) Pull out the sequence titles with their sequence of the hits (as indicated by the stitle - last line of the blast output) and save them to a new file: 
+grep -A 1 “#insert_name_of_first_hit_here” sub_combinedexomes.fa > matches.fa
+grep -A 1 “#nsert_name_of_second_hit_here” sub_combinedexomes.fa >> matches.fa
+grep -A 1 “#nsert_name_of_third_hit_here” sub_combinedexomes.fa >> matches.fa
+***Do this for every single hit 
+
+
+28.) Add the HBB reference gene sequence and header to the matches.fa file
+hbbgene_unwrap.fa >> matches.fa
+
+
+29.) Conduct a Multiple Sequence Alignment using MAFFT: 
+mafft --reorder --localpair --thread 6 matches.fa > final.aln
+
+
+30.) Look at the final alignment and copy all of its contents: 
+cat final.aln
+Command+C
+
+
+31.) Use MView to analyze differences in rs334 SNP region among sequences:
+   • Navigate to: https://www.ebi.ac.uk/Tools/msa/mview/
+       o "Under Step 1- Enter your input” “Enter or paste a” select “DNA” from the dropdown tab 
+       o Paste in the alignment: Command+V
+       o Leave Steps 2, 3, & 4 as is 
+       o Click “Submit”
+       
+       
+**FINAL PRODUCTS CANNOT BE INCLUDED BECAUSE STEPS 27-31 COULD NOT BE PERFORMED.**       
