@@ -151,7 +151,7 @@ Enter
 awk '{if(NR==1) {print $0} else {if($0 ~ /^>/) {print "\n"$0} else {printf $0}}}' hbbgene.fasta > hbbgene_unwrap.fa  
 
 
-18.) Download each individual’s exome read file initially from the ENA. Copy the links from the text application they were all pasted in. 
+18.) Download each individual’s forward exome read file initially obtained from the ENA. Copy the links from the text application they were all pasted in. 
 curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/000/SRR1598280/SRR1598280_1.fastq.gz
 curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/007/SRR1598367/SRR1598367_1.fastq.gz
 curl -LO ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR159/002/SRR1598442/SRR1598442_1.fastq.gz
