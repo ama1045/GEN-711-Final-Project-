@@ -23,7 +23,7 @@
          HG00107
 
 
-2.) Obtain datasets for rs334 SNP analysis by searching for each individual’s Sample ID in the European Nucleotide Archive (ENA):
+2.) Obtain datasets for rs334 SNP analysis by searching for each individual’s sample ID in the European Nucleotide Archive (ENA):
   • Navigate to: https://www.ebi.ac.uk/ena/browser/home
     o In the first search  box, type in one of the ten individuals' Sample IDs
     o Next to the “Run” tab, select the “View all [#] Results” link
@@ -748,11 +748,11 @@ grep -A 1 “SRR1604180.17098918” sub_combinedexomes.fa >> matches.fa
 grep -A 1 “SRR1604180.17100725” sub_combinedexomes.fa >> matches.fa
 
 
-28.) Add the HBB reference gene header and sequence to the matches.fa file
+28.) Add the HBB reference gene header and sequence to the matches.fa file:
 hbbgene_unwrap.fa >> matches.fa
 
 
-29.) Conduct a Multiple Sequence Alignment using MAFFT: 
+29.) Conduct a multiple sequence alignment using MAFFT: 
 mafft --reorder --localpair --thread 6 matches.fa > final.aln
 
 
