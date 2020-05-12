@@ -128,7 +128,7 @@ conda install -c bioconda mafft
 cd ..
 
 
-15.) Copy the HBB gene, which will serve as the reference sequence, from NCBI:
+15.) Copy the HBB gene from NCBI, which will serve as the reference sequence:
    • Navigate to: https://www.ncbi.nlm.nih.gov
        o Under the “All Databases” tab, select “Gene”
        o In the search box, type “HBB” and search 
