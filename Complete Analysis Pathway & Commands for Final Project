@@ -235,7 +235,7 @@ less blast.out
 grep -A 1 “#insertqueryIDhere” sub_combinedexomes.fa > matches.fa
 grep -A 1 “#insertqueryIDhere” sub_combinedexomes.fa >> matches.fa
 grep -A 1 “#insertqueryIDhere” sub_combinedexomes.fa >> matches.fa
-# ***Do this for every single hit. Replace #insertqueryIDhere with a different hit each time. 
+# ***Do this for all 514 hits. Replace #insertqueryIDhere with a different hit each time. 
 
 
 28.) Add the HBB reference gene header and sequence to the matches.fa file
