@@ -182,7 +182,7 @@ ls *.fastq.gz
 rm *.fastq.gz
 
 
-21.) Subsample down each individual’s exome .fasta read file to reduce the number of sequences in each:
+21.) Subsample down each individual’s exome read file to 2.5 M sequences:
 seqtk sample -s2343 SRR1598280_1.fasta 2500000 > sub_SRR1598280_1.fa
 seqtk sample -s2343 SRR1598367_1.fasta 2500000 > sub_SRR1598367_1.fa
 seqtk sample -s2343 SRR1598442_1.fasta 2500000 > sub_SRR1598442_1.fa
@@ -195,14 +195,14 @@ seqtk sample -s2343 SRR1600436_1.fasta 2500000 > sub_SRR1600436_1.fa
 seqtk sample -s2343 SRR1599300_1.fasta 2500000 > sub_SRR1599300_1.fa
 
 
-22.) Combine each individual’s subsampled exome .fa read file into one file:
+22.) Combine every individual’s subsampled exome read file into one file:
 ls sub*
 cat sub* > sub_combinedexomes.fa
 
 
-23.) Check to make sure that the sub_combinedexomes.fa file is the same size as all of the subsampled .fa files added together:
+23.) Check to make sure that the sub_combinedexomes.fa file is the same size as all of the individual subsampled exome read files added together:
 ls -lht
-# Add up all of the exome .fasta files and compare the total with the size of the combinedexomes.fa file. They should be the same:
+# Add up all of the the individual subsampled exome read files and compare that total with the size of the sub_combinedexomes.fa file. They should be the same:
 
 2.9G sub_combinedexomes.fa
 
@@ -220,11 +220,11 @@ ls -lht
 317M + 293M + 293M + 261M + 317M + 318M + 317M + 317M + 243M + 243M = 2919M or 2.919 G.
 
 
-24.) Build the database (HBB reference gene) that BLAST will use for searching
+24.) Build the database (HBB reference gene) that BLAST will use for searching:
 makeblastdb -in hbbgene_unwrap.fa -out hbbgene_database -dbtype nucl
 
 
-25.) Blast the query (subsampled exome reads file) to the database (HBB reference gene) 
+25.) Blast the query (subsampled exome reads file) to the database (HBB reference gene):
 blastn -db hbbgene_database -max_target_seqs 1 -query sub_combinedexomes.fa -outfmt '6 qseqid qlen length pident gaps evalue stitle' -evalue 1e-10 -num_threads 6 -out blast.out
 
 
