@@ -105,7 +105,7 @@ conda update -n base conda
 conda create -y --name finalproject
 
 
-10.) Activate conda environment:
+10.) Activate the conda environment:
 conda activate finalproject
 
 
