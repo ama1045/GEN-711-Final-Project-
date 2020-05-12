@@ -25,7 +25,7 @@
 
 2.) Obtain datasets for rs334 SNP analysis by searching for each individual’s Sample ID in the European Nucleotide Archive (ENA):
   • Navigate to: https://www.ebi.ac.uk/ena/browser/home
-    o In the first search  box, type in one of the Sample IDs
+    o In the first search  box, type in one of the ten individuals' Sample IDs
     o Next to the “Run” tab, select the “View all [#] Results” link
     o Select the “SRR..” accession number that includes only exome data 
     o Select the “Show” link next to “Read Files:”
