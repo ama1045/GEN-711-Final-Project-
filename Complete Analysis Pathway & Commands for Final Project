@@ -224,21 +224,21 @@ ls -lht
 makeblastdb -in hbbgene_unwrap.fa -out hbbgene_database -dbtype nucl
 
 
-25.) Blast the query (subsampled exome reads file) to the database (HBB reference gene):
+25.) Blast the query (combined subsampled exome reads file) to the database (HBB reference gene):
 blastn -db hbbgene_database -max_target_seqs 1 -query sub_combinedexomes.fa -outfmt '6 qseqid qlen length pident gaps evalue stitle' -evalue 1e-10 -num_threads 6 -out blast.out
 
 
 26.) Look at the blast output file:
 less blast.out
 
-27.) Pull out the sequence titles with their sequence of the hits (as indicated by the stitle - last line of the blast output) and save them to a new file: 
-grep -A 1 “#insert_name_of_first_hit_here” sub_combinedexomes.fa > matches.fa
-grep -A 1 “#nsert_name_of_second_hit_here” sub_combinedexomes.fa >> matches.fa
-grep -A 1 “#nsert_name_of_third_hit_here” sub_combinedexomes.fa >> matches.fa
-***Do this for every single hit 
+27.) Pull out all of the hits (headers and corresponding sequences) using the query IDs indicated in the blast output from the sub_combinedexomes.fa file and save them to a new file: 
+grep -A 1 “#insertqueryIDhere” sub_combinedexomes.fa > matches.fa
+grep -A 1 “#insertqueryIDhere” sub_combinedexomes.fa >> matches.fa
+grep -A 1 “#insertqueryIDhere” sub_combinedexomes.fa >> matches.fa
+# ***Do this for every single hit. Replace #insertqueryIDhere with a different hit each time. 
 
 
-28.) Add the HBB reference gene sequence and header to the matches.fa file
+28.) Add the HBB reference gene header and sequence to the matches.fa file
 hbbgene_unwrap.fa >> matches.fa
 
 
@@ -251,9 +251,9 @@ cat final.aln
 Command+C
 
 
-31.) Use MView to analyze differences in rs334 SNP region among sequences:
+31.) Use MView to analyze differences in the rs334 SNP region among individuals:
    • Navigate to: https://www.ebi.ac.uk/Tools/msa/mview/
-       o "Under Step 1- Enter your input” “Enter or paste a” select “DNA” from the dropdown tab 
+       o "Under Step 1- Enter your input” “Enter or paste a”, select “DNA” from the dropdown tab 
        o Paste in the alignment: Command+V
        o Leave Steps 2, 3, & 4 as is 
        o Click “Submit”
