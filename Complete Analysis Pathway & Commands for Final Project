@@ -109,12 +109,12 @@ conda create -y --name finalproject
 conda activate finalproject
 
 
-11.) Install blast 
+11.) Install BLAST:
 conda install -c bioconda blast
 # type “y” and then "enter" to proceed 
 
 
-12.) Install seqtk 
+12.) Install seqtk:
 conda install -c bioconda seqtk
 # type “y” and then "enter" to proceed 
 
