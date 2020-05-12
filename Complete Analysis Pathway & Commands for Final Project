@@ -32,7 +32,7 @@
     o Copy only the forward exome reads that end in _1 under the “FASTQ FTP” header
          Control+click
          Select “Copy Link”
-****Do all of these steps for EACH Sample ID 
+    ***Do this series of steps for EACH Sample ID 
 
 
 3.) Paste the links for the forward exome read files in any text application (such as Word) for later use and so it is known which exome read file belongs to each individual. Organize the data in a way that looks something like this:
