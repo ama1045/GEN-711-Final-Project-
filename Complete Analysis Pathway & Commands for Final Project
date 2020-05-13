@@ -749,7 +749,7 @@ grep -A 1 “SRR1604180.17100725” sub_combinedexomes.fa >> matches.fa
 
 
 28.) Add the HBB reference gene header and sequence to the matches.fa file:
-hbbgene_unwrap.fa >> matches.fa
+cat hbbgene_unwrap.fa >> matches.fa
 
 
 29.) Conduct a multiple sequence alignment using MAFFT: 
