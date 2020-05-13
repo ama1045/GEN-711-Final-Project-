@@ -73,8 +73,8 @@
 5.) Once the instance is fully active, connect to the Jetstream instance via the terminal: 
 ssh -i $HOME/jetkey username@xxx.xxx.xxx.xxx 
 # Replace "username" with Jetstream username, and "xxx.xxx.xxx.xxx" with the copied IP Address 
-# When it asks if you want to continue connecting, type "yes" and hit enter.
-# Type in Jetstream password when prompted.
+# When it asks if you want to continue connecting, type "yes" and hit enter
+# Type in Jetstream password when prompted
 
 
 6.) Create a tmux window:
