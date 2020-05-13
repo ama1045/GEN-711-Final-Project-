@@ -25,14 +25,14 @@
 
 2.) Obtain datasets for rs334 SNP analysis by searching for each individual’s sample ID in the European Nucleotide Archive (ENA):
   • Navigate to: https://www.ebi.ac.uk/ena/browser/home
-    o In the first search  box, type in one of the ten individuals' Sample IDs
+    o In the first search  box, type in one of the ten individuals' sample IDs
     o Next to the “Run” tab, select the “View all [#] Results” link
     o Select the “SRR..” accession number that includes only exome data 
     o Select the “Show” link next to “Read Files:”
     o Copy only the forward exome reads that end in _1 under the “FASTQ FTP” header
          Control+click
          Select “Copy Link”
-    ***Do this series of steps for EACH Sample ID 
+    ***Do this series of steps for EACH sample ID 
 
 
 3.) Paste the links for the forward exome read files in any text application (such as Word) for later use and so it is known which exome read file belongs to each individual. Organize the data in a way that looks something like this:
